@@ -2,10 +2,12 @@
 //import 'package:api_example/repository/repository_products.dart';
 import 'package:api_integration/model/products_model.dart';
 import 'package:api_integration/repository/repository_products.dart';
+import 'package:api_integration/services/products_services.dart';
 import 'package:flutter/material.dart';
 
 class ProductsViewmodel extends ChangeNotifier{
   final RepositoryProducts _repository=RepositoryProducts();
+  final ProductsServices _service=ProductsServices();
   List<Products> product=[];
   bool isLoading=false;
   String message="";
@@ -53,4 +55,12 @@ class ProductsViewmodel extends ChangeNotifier{
     isLoading=false;
     notifyListeners();
   }
+Future <void>  updateproduct(int id,String title,double price) async{
+  Map<String,dynamic> updateData={
+    "title":title,
+    "price":price
+  };
+  await _service.updateproduct(id, updateData);
+  notifyListeners();
+}
 }

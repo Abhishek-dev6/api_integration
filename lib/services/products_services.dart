@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class  ProductsServices {
+  
 
 Future<void> updateproduct(int id,Map <String,dynamic> updateData) async{
   final url=Uri.parse('https://api.restful-api.dev/objects/$id');
@@ -14,4 +16,4 @@ Future<void> updateproduct(int id,Map <String,dynamic> updateData) async{
   }else{
     print("failed to update");
   }
-}
+}}
