@@ -13,13 +13,14 @@ class _EmployeeviewState extends State<Employeeview> {
   late EmployeeViewModel employeeViewModel;
   @override
   void initState() {
-    employeeViewModel= context.read<EmployeeViewModel>();
-    WidgetsBinding.instance.addPostFrameCallback((v){
+    employeeViewModel = context.read<EmployeeViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((v) {
       employeeViewModel.fetchEmployees();
     });
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final view = Provider.of<EmployeeViewModel>(context);
@@ -38,9 +39,11 @@ class _EmployeeviewState extends State<Employeeview> {
                   final emp = view.employees[index];
                   return ListTile(
                     title: Text(emp.employeeName ?? ''),
-                    subtitle: Text("Salary:${emp.employeeSalary}|Age:${emp.employeeAge}"),
+                    subtitle: Text(
+                      "Salary:${emp.employeeSalary}|Age:${emp.employeeAge}",
+                    ),
                     trailing: IconButton(
-                      onPressed: () => view.deleteEmployee(emp.id ??0),
+                      onPressed: () => view.deleteEmployee(emp.id ?? 0),
                       icon: Icon(Icons.delete),
                     ),
                   );
