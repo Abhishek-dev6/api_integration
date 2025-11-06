@@ -11,7 +11,7 @@ class ProductsViewmodel extends ChangeNotifier{
   List<Products> product=[];
   bool isLoading=false;
   String message="";
-  Future<void> getProducts() async{
+  Future<void> fetchProducts() async{
     isLoading=true;
     notifyListeners();
     try{

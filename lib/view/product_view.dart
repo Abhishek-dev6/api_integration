@@ -135,7 +135,7 @@ class _ProductScreenState extends State<ProductScreen> {
     super.initState();
     Future.microtask(
       () =>
-          Provider.of<ProductsViewmodel>(context, listen: false).getProducts(),
+          Provider.of<ProductsViewmodel>(context, listen: false).fetchProducts(),
     );
   }
 
@@ -152,32 +152,44 @@ class _ProductScreenState extends State<ProductScreen> {
             return const Center(child: Text("No products found."));
           }
 
-          return ListView.builder(
-            itemCount: vm.product.length,
-            itemBuilder: (context, index) {
-              final product = vm.product[index];
-              return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                child: ListTile(
-                  title: Text(product.name ?? ""),
-                  subtitle: Text(
-                    "Color: ${product.data?.dataColor ?? "N/A"} | Price: ${product.data?.dataPrice?.toStringAsFixed(2) ?? "N/A"}",
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      if (product.id != null) {
-                        vm.deleteProduct(product.id!);
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Product ID not found")),
-                        );
-                      }
-                    },
-                  ),
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: vm.product.length,
+                  itemBuilder: (context, index) {
+                    final product = vm.product[index];
+                    return Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      child: ListTile(
+                        title: Text(product.name ?? ""),
+                        subtitle: Text(
+                          "Color: ${product.data?.dataColor ?? "N/A"} | Price: ${product.data?.dataPrice?.toStringAsFixed(2) ?? "N/A"}",
+                        ),
+                        trailing:Wrap(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                if (product.id != null) {
+                                  vm.deleteProduct(product.id!);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Product ID not found")),
+                                  );
+                                }
+                              },
+                            ),ElevatedButton(onPressed: (){
+                              context.read<ProductsViewmodel>().updateproduct(1,"Updated product name",99.99);
+                            }, child: Text("Update"))
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ],
           );
         },
       ),
