@@ -60,7 +60,7 @@ Future <void>  updateproduct(int id,String title,double price) async{
     "title":title,
     "price":price
   };
-  await _service.updateproduct(id, updateData);
+  await _service.updateproduct(id, updateData,title,price);
   notifyListeners();
 }
 }
