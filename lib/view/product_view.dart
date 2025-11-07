@@ -135,7 +135,10 @@ class _ProductScreenState extends State<ProductScreen> {
     super.initState();
     Future.microtask(
       () =>
-          Provider.of<ProductsViewmodel>(context, listen: false).fetchProducts(),
+          Provider.of<ProductsViewmodel>(
+            context,
+            listen: false,
+          ).fetchProducts(),
     );
   }
 
@@ -160,13 +163,16 @@ class _ProductScreenState extends State<ProductScreen> {
                   itemBuilder: (context, index) {
                     final product = vm.product[index];
                     return Card(
-                      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       child: ListTile(
                         title: Text(product.name ?? ""),
                         subtitle: Text(
                           "Color: ${product.data?.dataColor ?? "N/A"} | Price: ${product.data?.dataPrice?.toStringAsFixed(2) ?? "N/A"}",
                         ),
-                        trailing:Wrap(
+                        trailing: Wrap(
                           children: [
                             IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
@@ -175,13 +181,23 @@ class _ProductScreenState extends State<ProductScreen> {
                                   vm.deleteProduct(product.id!);
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text("Product ID not found")),
+                                    const SnackBar(
+                                      content: Text("Product ID not found"),
+                                    ),
                                   );
                                 }
                               },
-                            ),ElevatedButton(onPressed: (){
-                              context.read<ProductsViewmodel>().updateproduct(1,"Updated product name",99.99);
-                            }, child: Text("Update"))
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                context.read<ProductsViewmodel>().updateproduct(
+                                  1,
+                                  "Updated product name",
+                                  99.99,
+                                );
+                              },
+                              child: Text("Update"),
+                            ),
                           ],
                         ),
                       ),
